@@ -3,94 +3,421 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Intrinsic Value Calculator</title>
+  <title>Graham Calculators Suite</title>
   <style>
-    /* Basic styling */
+    /* Overall page styling */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+      background: #f7f7f7;
+      color: #333;
     }
-    .calculator {
-      max-width: 400px;
+    .container {
+      max-width: 750px;
       margin: 0 auto;
+      background: #fff;
       padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
     }
     label {
       display: block;
       margin: 10px 0 5px;
+      font-weight: bold;
     }
     input[type="number"],
     select {
       width: 100%;
       padding: 8px;
-      box-sizing: border-box;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
     button {
-      padding: 10px 20px;
-      margin-top: 10px;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #3498db;
+      border: none;
+      color: #fff;
+      font-size: 1em;
+      border-radius: 4px;
       cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #2980b9;
     }
     .result {
       margin-top: 20px;
-      font-size: 1.2em;
+      font-size: 1.1em;
+      background: #ecf0f1;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .hidden {
+      display: none;
+    }
+    hr {
+      margin: 30px 0;
+      border: none;
+      border-top: 1px solid #ddd;
+    }
+    /* Glossary styling */
+    .glossary {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 4px;
+    }
+    .glossary dt {
       font-weight: bold;
+      margin-top: 10px;
+    }
+    .glossary dd {
+      margin: 0 0 10px 20px;
     }
   </style>
 </head>
 <body>
-  <div class="calculator">
-    <h1>Intrinsic Value Calculator</h1>
-    <form id="calculatorForm">
-      <!-- EPS input -->
-      <label for="eps">Earnings per Share (EPS):</label>
-      <input type="number" id="eps" name="eps" step="0.01" required />
+  <div class="container">
+    <h1>Graham Calculators Suite</h1>
+    
+    <!-- Calculator Selection -->
+    <label for="calcSelect">Choose Calculator:</label>
+    <select id="calcSelect" onchange="switchCalculator()">
+      <option value="calc1">1. Graham Basic Calculator</option>
+      <option value="calc2">2. Graham Future Growth Calculator</option>
+      <option value="calc3">3. Graham Margin of Safety Calculator</option>
+      <option value="calc4">4. Intrinsic Value Range Calculator</option>
+      <option value="calc5">5. CAGR Calculator</option>
+    </select>
 
-      <!-- Growth input -->
-      <label for="growth">Expected Long-Term Growth Rate (g) in %:</label>
-      <input type="number" id="growth" name="growth" step="0.1" required />
+    <!-- Calculator 1: Graham Basic Calculator -->
+    <div id="calc1" class="calc-section">
+      <h2>Graham Basic Calculator</h2>
+      <form id="calculatorForm1">
+        <label for="eps_basic">Earnings per Share (EPS):</label>
+        <input type="number" id="eps_basic" name="eps_basic" step="0.01" required />
 
-      <!-- Bond yield dropdown -->
-      <label for="bondYield">
-        Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
-      </label>
-      <select id="bondYield" name="bondYield">
-        <option value="4.0">4.0%</option>
-        <option value="4.2">4.2%</option>
-        <option value="4.4">4.4%</option>
-        <option value="4.8">4.8%</option>
-        <option value="5.0">5.0%</option>
-        <option value="5.25" selected>5.25%</option>
-        <option value="5.5">5.5%</option>
-      </select>
+        <label for="growth_basic">Expected Long-Term Growth Rate (g) in %:</label>
+        <input type="number" id="growth_basic" name="growth_basic" step="0.1" required />
 
-      <button type="button" onclick="calculateIntrinsicValue()">Calculate</button>
-    </form>
-    <div class="result" id="result"></div>
+        <label for="bondYield_basic">
+          Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
+        </label>
+        <select id="bondYield_basic" name="bondYield_basic">
+          <option value="4.0">4.0%</option>
+          <option value="4.2">4.2%</option>
+          <option value="4.4">4.4%</option>
+          <option value="4.8">4.8%</option>
+          <option value="5.0">5.0%</option>
+          <option value="5.25" selected>5.25%</option>
+          <option value="5.5">5.5%</option>
+        </select>
+
+        <button type="button" onclick="calculateBasic()">Calculate Intrinsic Value</button>
+      </form>
+      <div class="result" id="result_basic"></div>
+    </div>
+
+    <!-- Calculator 2: Graham Future Growth Calculator -->
+    <div id="calc2" class="calc-section hidden">
+      <h2>Graham Future Growth Calculator</h2>
+      <form id="calculatorForm2">
+        <label for="eps_prev">Previous Year EPS:</label>
+        <input type="number" id="eps_prev" name="eps_prev" step="0.01" required />
+
+        <label for="eps_future">EPS 5 Years Later:</label>
+        <input type="number" id="eps_future" name="eps_future" step="0.01" required />
+
+        <label for="bondYield_future">
+          Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
+        </label>
+        <select id="bondYield_future" name="bondYield_future">
+          <option value="4.0">4.0%</option>
+          <option value="4.2">4.2%</option>
+          <option value="4.4">4.4%</option>
+          <option value="4.8">4.8%</option>
+          <option value="5.0">5.0%</option>
+          <option value="5.25" selected>5.25%</option>
+          <option value="5.5">5.5%</option>
+        </select>
+
+        <button type="button" onclick="calculateFuture()">Calculate Intrinsic Value</button>
+      </form>
+      <div class="result" id="result_future"></div>
+    </div>
+
+    <!-- Calculator 3: Graham Margin of Safety Calculator -->
+    <div id="calc3" class="calc-section hidden">
+      <h2>Graham Margin of Safety Calculator</h2>
+      <form id="calculatorForm3">
+        <label for="eps_margin">Earnings per Share (EPS):</label>
+        <input type="number" id="eps_margin" name="eps_margin" step="0.01" required />
+
+        <label for="growth_margin">Expected Long-Term Growth Rate (g) in %:</label>
+        <input type="number" id="growth_margin" name="growth_margin" step="0.1" required />
+
+        <label for="bondYield_margin">
+          Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
+        </label>
+        <select id="bondYield_margin" name="bondYield_margin">
+          <option value="4.0">4.0%</option>
+          <option value="4.2">4.2%</option>
+          <option value="4.4">4.4%</option>
+          <option value="4.8">4.8%</option>
+          <option value="5.0">5.0%</option>
+          <option value="5.25" selected>5.25%</option>
+          <option value="5.5">5.5%</option>
+        </select>
+
+        <label for="marketPrice">Current Market Price:</label>
+        <input type="number" id="marketPrice" name="marketPrice" step="0.01" required />
+
+        <button type="button" onclick="calculateMargin()">Calculate Margin of Safety</button>
+      </form>
+      <div class="result" id="result_margin"></div>
+    </div>
+
+    <!-- Calculator 4: Intrinsic Value Range Calculator -->
+    <div id="calc4" class="calc-section hidden">
+      <h2>Intrinsic Value Range Calculator</h2>
+      <form id="sensitivityForm">
+        <label for="eps_range">Earnings per Share (EPS):</label>
+        <input type="number" id="eps_range" name="eps_range" step="0.01" required />
+
+        <label for="growthMin">Minimum Expected Growth Rate (g) in %:</label>
+        <input type="number" id="growthMin" name="growthMin" step="0.1" required />
+
+        <label for="growthMax">Maximum Expected Growth Rate (g) in %:</label>
+        <input type="number" id="growthMax" name="growthMax" step="0.1" required />
+
+        <label for="bondYield_range">
+          Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
+        </label>
+        <select id="bondYield_range" name="bondYield_range">
+          <option value="4.0">4.0%</option>
+          <option value="4.2">4.2%</option>
+          <option value="4.4">4.4%</option>
+          <option value="4.8">4.8%</option>
+          <option value="5.0">5.0%</option>
+          <option value="5.25" selected>5.25%</option>
+          <option value="5.5">5.5%</option>
+        </select>
+
+        <button type="button" onclick="calculateRange()">Calculate Range</button>
+      </form>
+      <div class="result" id="result_range"></div>
+    </div>
+
+    <!-- Calculator 5: CAGR Calculator -->
+    <div id="calc5" class="calc-section hidden">
+      <h2>CAGR Calculator</h2>
+      <form id="cagrForm">
+        <p>Enter EPS for each year:</p>
+        <label for="eps1">EPS Year 1:</label>
+        <input type="number" id="eps1" name="eps1" step="0.01" required />
+
+        <label for="eps2">EPS Year 2:</label>
+        <input type="number" id="eps2" name="eps2" step="0.01" required />
+
+        <label for="eps3">EPS Year 3:</label>
+        <input type="number" id="eps3" name="eps3" step="0.01" required />
+
+        <label for="eps4">EPS Year 4:</label>
+        <input type="number" id="eps4" name="eps4" step="0.01" required />
+
+        <label for="eps5">EPS Year 5:</label>
+        <input type="number" id="eps5" name="eps5" step="0.01" required />
+
+        <label for="eps6">EPS Year 6:</label>
+        <input type="number" id="eps6" name="eps6" step="0.01" required />
+
+        <label for="startYear">Start Year:</label>
+        <select id="startYear" name="startYear">
+          <option value="1">Year 1</option>
+          <option value="2">Year 2</option>
+          <option value="3" selected>Year 3</option>
+          <option value="4">Year 4</option>
+          <option value="5">Year 5</option>
+          <option value="6">Year 6</option>
+        </select>
+
+        <label for="endYear">End Year:</label>
+        <select id="endYear" name="endYear">
+          <option value="2">Year 2</option>
+          <option value="3">Year 3</option>
+          <option value="4">Year 4</option>
+          <option value="5">Year 5</option>
+          <option value="6" selected>Year 6</option>
+        </select>
+
+        <button type="button" onclick="calculateCAGR()">Calculate CAGR</button>
+      </form>
+      <div class="result" id="result_cagr"></div>
+    </div>
+
+    <hr />
+
+    <!-- Glossary Section -->
+    <div class="glossary">
+      <h2>Glossary</h2>
+      <dl>
+        <dt>EPS (Earnings per Share)</dt>
+        <dd>The profit allocated to each outstanding share of a company's stock.</dd>
+        
+        <dt>Growth Rate (g)</dt>
+        <dd>The expected annual percentage increase in EPS or another financial metric.</dd>
+        
+        <dt>Bond Yield (Y)</dt>
+        <dd>The annual return on a bond investment, expressed as a percentage.</dd>
+        
+        <dt>Intrinsic Value</dt>
+        <dd>The estimated “true” value of a stock based on financial formulas (here, using Graham’s methods).</dd>
+        
+        <dt>Margin of Safety</dt>
+        <dd>A measure of how much the intrinsic value exceeds the current market price; a higher percentage indicates more potential downside protection.</dd>
+        
+        <dt>CAGR (Compound Annual Growth Rate)</dt>
+        <dd>The annual growth rate of an investment over a specified period, calculated using the beginning and ending values.</dd>
+      </dl>
+    </div>
   </div>
 
   <script>
-    // Attach the function to the global scope so the inline onclick can access it.
-    window.calculateIntrinsicValue = function() {
-      // Retrieve input values
-      const eps = parseFloat(document.getElementById('eps').value);
-      const growth = parseFloat(document.getElementById('growth').value);
-      const bondYield = parseFloat(document.getElementById('bondYield').value);
+    // Function to switch between calculator sections based on the dropdown selection
+    function switchCalculator() {
+      const selected = document.getElementById('calcSelect').value;
+      // Hide all calculator sections
+      const sections = document.querySelectorAll('.calc-section');
+      sections.forEach(section => section.classList.add('hidden'));
+      
+      // Show the selected calculator section
+      document.getElementById(selected).classList.remove('hidden');
+    }
 
-      // Validate inputs
+    // Calculator 1: Graham Basic Calculator
+    function calculateBasic() {
+      const eps = parseFloat(document.getElementById('eps_basic').value);
+      const growth = parseFloat(document.getElementById('growth_basic').value);
+      const bondYield = parseFloat(document.getElementById('bondYield_basic').value);
+      
       if (isNaN(eps) || isNaN(growth) || isNaN(bondYield)) {
         alert("Please enter valid values for all fields.");
         return;
       }
-
-      // Calculate using the formula: V = {EPS x (8.5 + 2g) x 4.4} / Y
+      
+      // Intrinsic Value formula: V = {EPS x (8.5 + 2g) x 4.4} / Y
       const intrinsicValue = (eps * (8.5 + 2 * growth) * 4.4) / bondYield;
+      document.getElementById('result_basic').innerHTML = "Intrinsic Value: $" + intrinsicValue.toFixed(2);
+    }
 
-      // Display the result formatted to two decimals
-      document.getElementById('result').innerHTML =
-        "Intrinsic Value: $" + intrinsicValue.toFixed(2);
-    };
+    // Calculator 2: Graham Future Growth Calculator
+    function calculateFuture() {
+      const epsPrev = parseFloat(document.getElementById('eps_prev').value);
+      const epsFuture = parseFloat(document.getElementById('eps_future').value);
+      const bondYield = parseFloat(document.getElementById('bondYield_future').value);
+      
+      if (isNaN(epsPrev) || isNaN(epsFuture) || isNaN(bondYield)) {
+        alert("Please enter valid values for all fields.");
+        return;
+      }
+      
+      // Calculate compound annual growth rate (CAGR) in percentage:
+      // g = ((EPS_5years / EPS_previous)^(1/5) - 1) * 100
+      const growth = (Math.pow(epsFuture / epsPrev, 1/5) - 1) * 100;
+      
+      // Use previous year's EPS in the intrinsic value formula:
+      const intrinsicValue = (epsPrev * (8.5 + 2 * growth) * 4.4) / bondYield;
+      document.getElementById('result_future').innerHTML =
+        "Intrinsic Value: $" + intrinsicValue.toFixed(2) +
+        "<br>Calculated Growth Rate: " + growth.toFixed(2) + "%";
+    }
+
+    // Calculator 3: Graham Margin of Safety Calculator
+    function calculateMargin() {
+      const eps = parseFloat(document.getElementById('eps_margin').value);
+      const growth = parseFloat(document.getElementById('growth_margin').value);
+      const bondYield = parseFloat(document.getElementById('bondYield_margin').value);
+      const marketPrice = parseFloat(document.getElementById('marketPrice').value);
+      
+      if (isNaN(eps) || isNaN(growth) || isNaN(bondYield) || isNaN(marketPrice)) {
+        alert("Please enter valid values for all fields.");
+        return;
+      }
+      
+      // Calculate intrinsic value using the basic formula
+      const intrinsicValue = (eps * (8.5 + 2 * growth) * 4.4) / bondYield;
+      // Calculate Margin of Safety (%)
+      const marginOfSafety = ((intrinsicValue - marketPrice) / intrinsicValue) * 100;
+      
+      document.getElementById('result_margin').innerHTML =
+        "Intrinsic Value: $" + intrinsicValue.toFixed(2) +
+        "<br>Margin of Safety: " + marginOfSafety.toFixed(2) + "%";
+    }
+
+    // Calculator 4: Intrinsic Value Range Calculator
+    function calculateRange() {
+      const eps = parseFloat(document.getElementById('eps_range').value);
+      const growthMin = parseFloat(document.getElementById('growthMin').value);
+      const growthMax = parseFloat(document.getElementById('growthMax').value);
+      const bondYield = parseFloat(document.getElementById('bondYield_range').value);
+      
+      if (isNaN(eps) || isNaN(growthMin) || isNaN(growthMax) || isNaN(bondYield)) {
+        alert("Please enter valid values for all fields.");
+        return;
+      }
+      
+      if (growthMin > growthMax) {
+        alert("Minimum growth rate must be less than or equal to Maximum growth rate.");
+        return;
+      }
+      
+      const intrinsicMin = (eps * (8.5 + 2 * growthMin) * 4.4) / bondYield;
+      const intrinsicMax = (eps * (8.5 + 2 * growthMax) * 4.4) / bondYield;
+      const intrinsicAvg = (intrinsicMin + intrinsicMax) / 2;
+      
+      let resultText = `<p>Intrinsic Value at ${growthMin.toFixed(1)}% growth: $${intrinsicMin.toFixed(2)}</p>`;
+      resultText += `<p>Intrinsic Value at ${growthMax.toFixed(1)}% growth: $${intrinsicMax.toFixed(2)}</p>`;
+      resultText += `<p>Average Intrinsic Value: $${intrinsicAvg.toFixed(2)}</p>`;
+      
+      document.getElementById('result_range').innerHTML = resultText;
+    }
+
+    // Calculator 5: CAGR Calculator
+    function calculateCAGR() {
+      // Get start and end years from the dropdowns
+      const startYear = parseInt(document.getElementById('startYear').value);
+      const endYear = parseInt(document.getElementById('endYear').value);
+      
+      if (startYear >= endYear) {
+        alert("End Year must be greater than Start Year.");
+        return;
+      }
+      
+      // Retrieve EPS for the chosen start and end years
+      const epsStart = parseFloat(document.getElementById('eps' + startYear).value);
+      const epsEnd = parseFloat(document.getElementById('eps' + endYear).value);
+      
+      if (isNaN(epsStart) || isNaN(epsEnd) || epsStart <= 0) {
+        alert("Please ensure the EPS for the selected start and end years are valid and that the start EPS is greater than 0.");
+        return;
+      }
+      
+      const numYears = endYear - startYear;
+      const cagr = (Math.pow(epsEnd / epsStart, 1 / numYears) - 1) * 100;
+      
+      document.getElementById('result_cagr').innerHTML = 
+        "CAGR from Year " + startYear + " to Year " + endYear + ": " + cagr.toFixed(2) + "%";
+    }
+
+    // Set the initial display (default to Calculator 1)
+    switchCalculator();
   </script>
 </body>
 </html>
+
