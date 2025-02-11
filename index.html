@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intrinsic Value Calculator</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .calculator {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h1>Intrinsic Value Calculator</h1>
+    <form id="calculatorForm">
+      <!-- EPS input -->
+      <label for="eps">Earnings per Share (EPS):</label>
+      <input type="number" id="eps" name="eps" step="0.01" required />
+
+      <!-- Growth input -->
+      <label for="growth">Expected Long-Term Growth Rate (g) in %:</label>
+      <input type="number" id="growth" name="growth" step="0.1" required />
+
+      <!-- Bond yield dropdown -->
+      <label for="bondYield">
+        Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
+      </label>
+      <select id="bondYield" name="bondYield">
+        <option value="4.0">4.0%</option>
+        <option value="4.2">4.2%</option>
+        <option value="4.4">4.4%</option>
+        <option value="4.8">4.8%</option>
+        <option value="5.0">5.0%</option>
+        <option value="5.25" selected>5.25%</option>
+        <option value="5.5">5.5%</option>
+      </select>
+
+      <button type="button" onclick="calculateIntrinsicValue()">Calculate</button>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    // Attach the function to the global scope so the inline onclick can access it.
+    window.calculateIntrinsicValue = function() {
+      // Retrieve input values
+      const eps = parseFloat(document.getElementById('eps').value);
+      const growth = parseFloat(document.getElementById('growth').value);
+      const bondYield = parseFloat(document.getElementById('bondYield').value);
+
+      // Validate inputs
+      if (isNaN(eps) || isNaN(growth) || isNaN(bondYield)) {
+        alert("Please enter valid values for all fields.");
+        return;
+      }
+
+      // Calculate using the formula: V = {EPS x (8.5 + 2g) x 4.4} / Y
+      const intrinsicValue = (eps * (8.5 + 2 * growth) * 4.4) / bondYield;
+
+      // Display the result formatted to two decimals
+      document.getElementById('result').innerHTML =
+        "Intrinsic Value: $" + intrinsicValue.toFixed(2);
+    };
+  </script>
+</body>
+</html>
