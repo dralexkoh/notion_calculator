@@ -1,32 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Graham Calculators Suite</title>
-
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Graham Calculators Suite" />
   <meta property="og:description" content="A suite of interactive financial calculators based on Graham's valuation methods." />
   <meta property="og:image" content="https://yourdomain.com/path-to-image.jpg" />
   <meta property="og:url" content="https://dralexkoh.github.io/notion_calculator/" />
   <meta property="og:type" content="website" />
-
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Graham Calculators Suite" />
   <meta name="twitter:description" content="A suite of interactive financial calculators based on Graham's valuation methods." />
   <meta name="twitter:image" content="https://yourdomain.com/path-to-image.jpg" />
-
-  <!-- Your CSS link (if any) -->
-  <link rel="stylesheet" href="styles.css" />
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Graham Calculators Suite</title>
   <style>
-    /* Overall page styling */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -88,7 +77,6 @@
       border: none;
       border-top: 1px solid #ddd;
     }
-    /* Glossary styling */
     .glossary {
       background: #f0f0f0;
       padding: 15px;
@@ -100,6 +88,19 @@
     }
     .glossary dd {
       margin: 0 0 10px 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background: #eee;
     }
   </style>
 </head>
@@ -123,13 +124,9 @@
       <form id="calculatorForm1">
         <label for="eps_basic">Earnings per Share (EPS):</label>
         <input type="number" id="eps_basic" name="eps_basic" step="0.01" required />
-
         <label for="growth_basic">Expected Long-Term Growth Rate (g) in %:</label>
         <input type="number" id="growth_basic" name="growth_basic" step="0.1" required />
-
-        <label for="bondYield_basic">
-          Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
-        </label>
+        <label for="bondYield_basic">Current Yield on 20-Year AAA Corporate Bonds (Y) in %:</label>
         <select id="bondYield_basic" name="bondYield_basic">
           <option value="4.0">4.0%</option>
           <option value="4.2">4.2%</option>
@@ -139,7 +136,6 @@
           <option value="5.25" selected>5.25%</option>
           <option value="5.5">5.5%</option>
         </select>
-
         <button type="button" onclick="calculateBasic()">Calculate Intrinsic Value</button>
       </form>
       <div class="result" id="result_basic"></div>
@@ -151,13 +147,9 @@
       <form id="calculatorForm2">
         <label for="eps_prev">Previous Year EPS:</label>
         <input type="number" id="eps_prev" name="eps_prev" step="0.01" required />
-
         <label for="eps_future">EPS 5 Years Later:</label>
         <input type="number" id="eps_future" name="eps_future" step="0.01" required />
-
-        <label for="bondYield_future">
-          Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
-        </label>
+        <label for="bondYield_future">Current Yield on 20-Year AAA Corporate Bonds (Y) in %:</label>
         <select id="bondYield_future" name="bondYield_future">
           <option value="4.0">4.0%</option>
           <option value="4.2">4.2%</option>
@@ -167,7 +159,6 @@
           <option value="5.25" selected>5.25%</option>
           <option value="5.5">5.5%</option>
         </select>
-
         <button type="button" onclick="calculateFuture()">Calculate Intrinsic Value</button>
       </form>
       <div class="result" id="result_future"></div>
@@ -179,13 +170,9 @@
       <form id="calculatorForm3">
         <label for="eps_margin">Earnings per Share (EPS):</label>
         <input type="number" id="eps_margin" name="eps_margin" step="0.01" required />
-
         <label for="growth_margin">Expected Long-Term Growth Rate (g) in %:</label>
         <input type="number" id="growth_margin" name="growth_margin" step="0.1" required />
-
-        <label for="bondYield_margin">
-          Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
-        </label>
+        <label for="bondYield_margin">Current Yield on 20-Year AAA Corporate Bonds (Y) in %:</label>
         <select id="bondYield_margin" name="bondYield_margin">
           <option value="4.0">4.0%</option>
           <option value="4.2">4.2%</option>
@@ -195,10 +182,8 @@
           <option value="5.25" selected>5.25%</option>
           <option value="5.5">5.5%</option>
         </select>
-
         <label for="marketPrice">Current Market Price:</label>
         <input type="number" id="marketPrice" name="marketPrice" step="0.01" required />
-
         <button type="button" onclick="calculateMargin()">Calculate Margin of Safety</button>
       </form>
       <div class="result" id="result_margin"></div>
@@ -210,16 +195,11 @@
       <form id="sensitivityForm">
         <label for="eps_range">Earnings per Share (EPS):</label>
         <input type="number" id="eps_range" name="eps_range" step="0.01" required />
-
         <label for="growthMin">Minimum Expected Growth Rate (g) in %:</label>
         <input type="number" id="growthMin" name="growthMin" step="0.1" required />
-
         <label for="growthMax">Maximum Expected Growth Rate (g) in %:</label>
         <input type="number" id="growthMax" name="growthMax" step="0.1" required />
-
-        <label for="bondYield_range">
-          Current Yield on 20-Year AAA Corporate Bonds (Y) in %:
-        </label>
+        <label for="bondYield_range">Current Yield on 20-Year AAA Corporate Bonds (Y) in %:</label>
         <select id="bondYield_range" name="bondYield_range">
           <option value="4.0">4.0%</option>
           <option value="4.2">4.2%</option>
@@ -229,35 +209,32 @@
           <option value="5.25" selected>5.25%</option>
           <option value="5.5">5.5%</option>
         </select>
-
         <button type="button" onclick="calculateRange()">Calculate Range</button>
       </form>
       <div class="result" id="result_range"></div>
     </div>
 
-    <!-- Calculator 5: CAGR Calculator -->
+    <!-- Calculator 5: CAGR Calculator (Extended to 8 Years) -->
     <div id="calc5" class="calc-section hidden">
       <h2>CAGR Calculator</h2>
       <form id="cagrForm">
         <p>Enter EPS for each year:</p>
         <label for="eps1">EPS Year 1:</label>
         <input type="number" id="eps1" name="eps1" step="0.01" required />
-
         <label for="eps2">EPS Year 2:</label>
         <input type="number" id="eps2" name="eps2" step="0.01" required />
-
         <label for="eps3">EPS Year 3:</label>
         <input type="number" id="eps3" name="eps3" step="0.01" required />
-
         <label for="eps4">EPS Year 4:</label>
         <input type="number" id="eps4" name="eps4" step="0.01" required />
-
         <label for="eps5">EPS Year 5:</label>
         <input type="number" id="eps5" name="eps5" step="0.01" required />
-
         <label for="eps6">EPS Year 6:</label>
         <input type="number" id="eps6" name="eps6" step="0.01" required />
-
+        <label for="eps7">EPS Year 7:</label>
+        <input type="number" id="eps7" name="eps7" step="0.01" required />
+        <label for="eps8">EPS Year 8:</label>
+        <input type="number" id="eps8" name="eps8" step="0.01" required />
         <label for="startYear">Start Year:</label>
         <select id="startYear" name="startYear">
           <option value="1">Year 1</option>
@@ -266,17 +243,19 @@
           <option value="4">Year 4</option>
           <option value="5">Year 5</option>
           <option value="6">Year 6</option>
+          <option value="7">Year 7</option>
+          <option value="8">Year 8</option>
         </select>
-
         <label for="endYear">End Year:</label>
         <select id="endYear" name="endYear">
           <option value="2">Year 2</option>
           <option value="3">Year 3</option>
           <option value="4">Year 4</option>
           <option value="5">Year 5</option>
-          <option value="6" selected>Year 6</option>
+          <option value="6">Year 6</option>
+          <option value="7">Year 7</option>
+          <option value="8" selected>Year 8</option>
         </select>
-
         <button type="button" onclick="calculateCAGR()">Calculate CAGR</button>
       </form>
       <div class="result" id="result_cagr"></div>
@@ -290,19 +269,14 @@
       <dl>
         <dt>EPS (Earnings per Share)</dt>
         <dd>The profit allocated to each outstanding share of a company's stock.</dd>
-        
         <dt>Growth Rate (g)</dt>
         <dd>The expected annual percentage increase in EPS or another financial metric.</dd>
-        
         <dt>Bond Yield (Y)</dt>
         <dd>The annual return on a bond investment, expressed as a percentage.</dd>
-        
         <dt>Intrinsic Value</dt>
         <dd>The estimated “true” value of a stock based on financial formulas (here, using Graham’s methods).</dd>
-        
         <dt>Margin of Safety</dt>
         <dd>A measure of how much the intrinsic value exceeds the current market price; a higher percentage indicates more potential downside protection.</dd>
-        
         <dt>CAGR (Compound Annual Growth Rate)</dt>
         <dd>The annual growth rate of an investment over a specified period, calculated using the beginning and ending values.</dd>
       </dl>
@@ -313,11 +287,8 @@
     // Function to switch between calculator sections based on the dropdown selection
     function switchCalculator() {
       const selected = document.getElementById('calcSelect').value;
-      // Hide all calculator sections
       const sections = document.querySelectorAll('.calc-section');
       sections.forEach(section => section.classList.add('hidden'));
-      
-      // Show the selected calculator section
       document.getElementById(selected).classList.remove('hidden');
     }
 
@@ -332,7 +303,6 @@
         return;
       }
       
-      // Intrinsic Value formula: V = {EPS x (8.5 + 2g) x 4.4} / Y
       const intrinsicValue = (eps * (8.5 + 2 * growth) * 4.4) / bondYield;
       document.getElementById('result_basic').innerHTML = "Intrinsic Value: $" + intrinsicValue.toFixed(2);
     }
@@ -348,11 +318,7 @@
         return;
       }
       
-      // Calculate compound annual growth rate (CAGR) in percentage:
-      // g = ((EPS_5years / EPS_previous)^(1/5) - 1) * 100
       const growth = (Math.pow(epsFuture / epsPrev, 1/5) - 1) * 100;
-      
-      // Use previous year's EPS in the intrinsic value formula:
       const intrinsicValue = (epsPrev * (8.5 + 2 * growth) * 4.4) / bondYield;
       document.getElementById('result_future').innerHTML =
         "Intrinsic Value: $" + intrinsicValue.toFixed(2) +
@@ -371,9 +337,7 @@
         return;
       }
       
-      // Calculate intrinsic value using the basic formula
       const intrinsicValue = (eps * (8.5 + 2 * growth) * 4.4) / bondYield;
-      // Calculate Margin of Safety (%)
       const marginOfSafety = ((intrinsicValue - marketPrice) / intrinsicValue) * 100;
       
       document.getElementById('result_margin').innerHTML =
@@ -409,7 +373,7 @@
       document.getElementById('result_range').innerHTML = resultText;
     }
 
-    // Calculator 5: CAGR Calculator
+    // Calculator 5: CAGR Calculator with normalization based on the lowest EPS in the selected period
     function calculateCAGR() {
       // Get start and end years from the dropdowns
       const startYear = parseInt(document.getElementById('startYear').value);
@@ -420,20 +384,37 @@
         return;
       }
       
-      // Retrieve EPS for the chosen start and end years
-      const epsStart = parseFloat(document.getElementById('eps' + startYear).value);
-      const epsEnd = parseFloat(document.getElementById('eps' + endYear).value);
+      // Gather EPS values for years 1 through 8
+      const epsValues = [];
+      for (let i = 1; i <= 8; i++) {
+        let val = parseFloat(document.getElementById('eps' + i).value);
+        epsValues.push(val);
+      }
       
-      if (isNaN(epsStart) || isNaN(epsEnd) || epsStart <= 0) {
-        alert("Please ensure the EPS for the selected start and end years are valid and that the start EPS is greater than 0.");
+      // Select the EPS values for the chosen period (from startYear to endYear, inclusive)
+      const selectedEPS = epsValues.slice(startYear - 1, endYear);
+      
+      // Find the minimum EPS in the selected period
+      const minEPS = Math.min(...selectedEPS);
+      
+      // Define offset: if minEPS is negative, offset = |minEPS| + 1; else, offset = 0.
+      const offset = minEPS < 0 ? Math.abs(minEPS) + 1 : 0;
+      
+      // Normalize the selected EPS values
+      const normalizedEPS = selectedEPS.map(val => val + offset);
+      
+      // If the normalized starting EPS is 0, CAGR is undefined.
+      if (normalizedEPS[0] === 0) {
+        document.getElementById('result_cagr').innerHTML =
+          "CAGR is undefined because the normalized starting EPS is zero.";
         return;
       }
       
       const numYears = endYear - startYear;
-      const cagr = (Math.pow(epsEnd / epsStart, 1 / numYears) - 1) * 100;
+      const overallCAGR = (Math.pow(normalizedEPS[normalizedEPS.length - 1] / normalizedEPS[0], 1 / numYears) - 1) * 100;
       
       document.getElementById('result_cagr').innerHTML = 
-        "CAGR from Year " + startYear + " to Year " + endYear + ": " + cagr.toFixed(2) + "%";
+        "Normalized CAGR from Year " + startYear + " to Year " + endYear + ": " + overallCAGR.toFixed(2) + "%";
     }
 
     // Set the initial display (default to Calculator 1)
